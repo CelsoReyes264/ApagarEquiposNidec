@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.BtnApagarPantalla = new System.Windows.Forms.Button();
             this.btnApagarPC = new System.Windows.Forms.Button();
+            this.tmEncender = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // BtnApagarPantalla
@@ -53,6 +55,10 @@
             this.btnApagarPC.UseVisualStyleBackColor = true;
             this.btnApagarPC.Click += new System.EventHandler(this.btnApagarPC_Click);
             // 
+            // tmEncender
+            // 
+            this.tmEncender.Tick += new System.EventHandler(this.tmEncender_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -72,6 +78,7 @@
 
         private System.Windows.Forms.Button BtnApagarPantalla;
         private System.Windows.Forms.Button btnApagarPC;
+        private System.Windows.Forms.Timer tmEncender;
     }
 }
 
