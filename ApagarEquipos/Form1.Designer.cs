@@ -33,6 +33,7 @@
             this.BtnApagarPantalla = new System.Windows.Forms.Button();
             this.btnApagarPC = new System.Windows.Forms.Button();
             this.tmEncender = new System.Windows.Forms.Timer(this.components);
+            this.tmApagarMonitor = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // BtnApagarPantalla
@@ -59,6 +60,10 @@
             // 
             this.tmEncender.Tick += new System.EventHandler(this.tmEncender_Tick);
             // 
+            // tmApagarMonitor
+            // 
+            this.tmApagarMonitor.Tick += new System.EventHandler(this.tmApagarMonitor_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -79,6 +84,7 @@
         private System.Windows.Forms.Button BtnApagarPantalla;
         private System.Windows.Forms.Button btnApagarPC;
         private System.Windows.Forms.Timer tmEncender;
+        private System.Windows.Forms.Timer tmApagarMonitor;
     }
 }
 
