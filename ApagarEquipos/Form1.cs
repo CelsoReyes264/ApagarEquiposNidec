@@ -64,9 +64,11 @@ namespace ApagarEquipos
 
         private static void MonitorOn()
         {
+            Form frm = new Form();
             mouse_event(MOUSEEVENTF_MOVE, 0, 1, 0, UIntPtr.Zero);
             Thread.Sleep(40);
             mouse_event(MOUSEEVENTF_MOVE, 0, -1, 0, UIntPtr.Zero);
+            SendMessage(frm.Handle, WM_SYSCOMMAND, SC_MONITORPOWER, -1);
         }
 
         private void Form1_Load(object sender, EventArgs e)
