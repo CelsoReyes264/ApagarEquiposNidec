@@ -32,8 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.BtnApagarPantalla = new System.Windows.Forms.Button();
             this.btnApagarPC = new System.Windows.Forms.Button();
-            this.tmEncender = new System.Windows.Forms.Timer(this.components);
-            this.tmApagarMonitor = new System.Windows.Forms.Timer(this.components);
+            this.tmObtenerTiempo = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // BtnApagarPantalla
@@ -56,13 +55,9 @@
             this.btnApagarPC.UseVisualStyleBackColor = true;
             this.btnApagarPC.Click += new System.EventHandler(this.btnApagarPC_Click);
             // 
-            // tmEncender
+            // tmObtenerTiempo
             // 
-            this.tmEncender.Tick += new System.EventHandler(this.tmEncender_Tick);
-            // 
-            // tmApagarMonitor
-            // 
-            this.tmApagarMonitor.Tick += new System.EventHandler(this.tmApagarMonitor_Tick);
+            this.tmObtenerTiempo.Tick += new System.EventHandler(this.tmObtenerTiempo_Tick);
             // 
             // Form1
             // 
@@ -83,8 +78,7 @@
 
         private System.Windows.Forms.Button BtnApagarPantalla;
         private System.Windows.Forms.Button btnApagarPC;
-        private System.Windows.Forms.Timer tmEncender;
-        private System.Windows.Forms.Timer tmApagarMonitor;
+        private System.Windows.Forms.Timer tmObtenerTiempo;
     }
 }
 
