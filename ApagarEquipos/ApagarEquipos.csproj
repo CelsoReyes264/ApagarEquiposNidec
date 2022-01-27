@@ -47,8 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\ApagadoEncendidoController.cs" />
-    <Compile Include="DAO\BusinessLayer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

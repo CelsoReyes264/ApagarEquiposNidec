@@ -13,7 +13,6 @@ using System.Management;
 using System.Threading;
 using System.Globalization;
 using System.Data.SqlClient;
-using ApagarEquipos.DAO;
 
 namespace ApagarEquipos
 {
@@ -41,14 +40,14 @@ namespace ApagarEquipos
         [StructLayout(LayoutKind.Sequential)]
         public struct SYSTEMTIME
         {
-            public short wYear;
-            public short wMonth;
-            public short wDayOfWeek;
-            public short wDay;
-            public short wHour;
-            public short wMinute;
-            public short wSecond;
-            public short wMilliseconds;
+            public ushort wYear;
+            public ushort wMonth;
+            public ushort wDayOfWeek;
+            public ushort wDay;
+            public ushort wHour;
+            public ushort wMinute;
+            public ushort wSecond;
+            public ushort wMilliseconds;
         }
 
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -91,16 +90,17 @@ namespace ApagarEquipos
         private void Form1_Load(object sender, EventArgs e)
         {
             ConsultaHora();
+            var x = TimeZoneInfo.ConvertTimeToUtc(Tiempo);
             SYSTEMTIME st = new SYSTEMTIME();
-            st.wYear = (short)Tiempo.Year; // must be short
-            st.wMonth = (short)Tiempo.Month;
-            st.wDay = (short)Tiempo.Day;
-            st.wDayOfWeek = (short)Tiempo.DayOfWeek;
-            st.wHour = (short)Tiempo.Hour;
-            st.wMinute = (short)Tiempo.Minute;
-            st.wSecond = (short)Tiempo.Second;
-            st.wMilliseconds = (short)Tiempo.Millisecond
+            st.wYear = (ushort)x.Year;
+            st.wMonth = (ushort)x.Month;
+            st.wDay = (ushort)x.Day;
+            st.wHour = (ushort)x.Hour;
+            st.wMinute = (ushort)x.Minute;
+            st.wSecond = (ushort)x.Second;
             SetSystemTime(ref st);
+            tmObtenerTiempo.Enabled = true;
+            tmObtenerTiempo.Interval = 100;
         } 
 
         private void tmObtenerTiempo_Tick(object sender, EventArgs e)
@@ -110,22 +110,18 @@ namespace ApagarEquipos
 
         private void ChecarTiempos()
         {
-            //aqui va a ir la funcion para traer hora servidor
             HoraActual = DateTime.Now;
             if (HoraActual >= HoraAlmuerzo &&  HoraActual < EntradaAlmuerzo)
             {
                 while (HoraActual < EntradaAlmuerzo)
                 {
-                    //aqui va a ir la funcion para traer hora servidor
                     HoraActual = DateTime.Now;
                     ApagarMonitor();
                 }
-                //i++;
                 EncenderMonitor();
             }
             else
             {
-                //aqui hay que hacer algo
 
             }
         }
