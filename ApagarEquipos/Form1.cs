@@ -12,24 +12,13 @@ using System.Diagnostics;
 using System.Management;
 using System.Threading;
 using System.Globalization;
+using System.Data.SqlClient;
+using ApagarEquipos.DAO;
 
 namespace ApagarEquipos
 {
     public partial class Form1 : Form
     {
-        [StructLayout(LayoutKind.Sequential)]
-        public struct SystemTime
-        {
-            public ushort Year;
-            public ushort Month;
-            public ushort DayOfWeek;
-            public ushort Day;
-            public ushort Hour;
-            public ushort Minute;
-            public ushort Second;
-            public ushort Millisecond;
-        };
-
         private const int WM_SYSCOMMAND = 0x112; //en VB &H112&
         private const int SC_MONITORPOWER = 0xF170; //en BV &HF170&
         private const int MOUSEEVENTF_MOVE = 0x0001;
@@ -44,12 +33,26 @@ namespace ApagarEquipos
         [DllImport("user32.dll")]
         static extern void mouse_event(Int32 dwFlags, Int32 dx, Int32 dy, Int32 dwData, UIntPtr dwExtraInfo);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool SetSystemTime(ref SystemTime st);
-
         public static DateTime HoraActual = DateTime.Now;
         public static DateTime HoraAlmuerzo = new DateTime(2022, 01, 27, 08, 36, 00);
         public static DateTime EntradaAlmuerzo = new DateTime(2022, 01, 27, 08, 37, 00);
+        public static DateTime Tiempo = new DateTime();
+        
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SYSTEMTIME
+        {
+            public short wYear;
+            public short wMonth;
+            public short wDayOfWeek;
+            public short wDay;
+            public short wHour;
+            public short wMinute;
+            public short wSecond;
+            public short wMilliseconds;
+        }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool SetSystemTime(ref SYSTEMTIME st);
         //APAGA POR COMPLETO PC
         private void ApagarPC()
         {
@@ -87,8 +90,17 @@ namespace ApagarEquipos
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            tmObtenerTiempo.Enabled = true;
-            tmObtenerTiempo.Interval = 100;
+            ConsultaHora();
+            SYSTEMTIME st = new SYSTEMTIME();
+            st.wYear = (short)Tiempo.Year; // must be short
+            st.wMonth = (short)Tiempo.Month;
+            st.wDay = (short)Tiempo.Day;
+            st.wDayOfWeek = (short)Tiempo.DayOfWeek;
+            st.wHour = (short)Tiempo.Hour;
+            st.wMinute = (short)Tiempo.Minute;
+            st.wSecond = (short)Tiempo.Second;
+            st.wMilliseconds = (short)Tiempo.Millisecond
+            SetSystemTime(ref st);
         } 
 
         private void tmObtenerTiempo_Tick(object sender, EventArgs e)
@@ -117,5 +129,24 @@ namespace ApagarEquipos
 
             }
         }
+
+        public void ConsultaHora()
+        {
+            
+            SqlConnection conn = new SqlConnection("Data Source=REY2MXNDSPPAP04;Initial Catalog=SIM;Persist Security Info=True;User ID=Developer;Password=Ac45035350");
+            conn.Open();
+
+            SqlCommand command = new SqlCommand("exec [Ingenieria].[ObtenerTiempo]", conn);
+            // int result = command.ExecuteNonQuery();
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    Tiempo = Convert.ToDateTime(reader["Tiempo"]);
+                }
+            }
+            conn.Close();
+        }
+
     }
 }

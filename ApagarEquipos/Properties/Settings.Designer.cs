@@ -26,5 +26,22 @@ namespace ApagarEquipos.Properties
                 return defaultInstance;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=REY2MXNDSPPAP04;Initial Catalog=SIM;Persist Security Info=True;Use" +
+            "r ID=Developer;Password=Ac45035350")]
+        public string SIMConnectionString
+        {
+            get
+            {
+                return ((string)(this["SIMConnectionString"]));
+            }
+            set
+            {
+                this["SIMConnectionString"] = value;
+            }
+        }
+
     }
 }
